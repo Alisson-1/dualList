@@ -212,6 +212,7 @@ public class SwingInterpretadorPLP extends JFrame {
 			jComboBoxLinguagens.addItem("Funcional 3");
 			jComboBoxLinguagens.addItem("Imperativa 1");
 			jComboBoxLinguagens.addItem("Imperativa 2");
+			jComboBoxLinguagens.addItem("Imperativa 3");
 			jComboBoxLinguagens.addItem("Orientada a Objetos 1");
 			jComboBoxLinguagens.addItem("Orientada a Objetos 2");			
 

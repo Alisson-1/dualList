@@ -21,6 +21,8 @@ import li1.plp.imperative1.memory.ContextoExecucaoImperativa;
 import li1.plp.imperative1.parser.Imp1Parser;
 import li2.plp.imperative2.memory.ContextoExecucaoImperativa2;
 import li2.plp.imperative2.parser.Imp2Parser;
+import li3.plp.imperative3.parser.Imp3Parser;
+
 //import loo1.plp.orientadaObjetos1.expressao.valor.ValorConcreto;
 import loo1.plp.orientadaObjetos1.parser.OO1Parser;
 import loo2.plp.orientadaObjetos2.parser.OO2Parser;
@@ -39,8 +41,9 @@ public class MultiInterpretador {
 	private static final int FUNC3 = 4;
 	private static final int IMP1 = 5;
 	private static final int IMP2 = 6;
-	private static final int OO1 = 7;
-	private static final int OO2 = 8;
+	private static final int IMP3 = 7;
+	private static final int OO1 = 8;
+	private static final int OO2 = 9;
 
 	private MessageBoard messageBoard;
 
@@ -51,6 +54,7 @@ public class MultiInterpretador {
 	private Func3Parser func3Parser = null;
 	private Imp1Parser imp1Parser = null;
 	private Imp2Parser imp2Parser = null;
+    private Imp3Parser imp3Parser = null;
 	private OO1Parser oo1Parser = null;
 	private OO2Parser oo2Parser = null;
 
@@ -86,6 +90,9 @@ public class MultiInterpretador {
 				break;
 			case IMP2:
 				interpretarImp2(fis, listaEntrada);
+				break;
+			case IMP3:
+				interpretarImp3(fis, listaEntrada);
 				break;
 			case OO1:
 				interpretarOO1(fis, listaEntrada);
@@ -224,6 +231,28 @@ public class MultiInterpretador {
 		}
 	}
 
+	private void interpretarImp3(InputStream fis, String entradaStr)
+			throws Exception {
+		li3.plp.imperative3.Programa prog;
+		if (imp3Parser == null) {
+			imp3Parser = new Imp3Parser(fis);
+		} else {
+			Imp3Parser.ReInit(fis);
+		}
+
+		prog = Imp3Parser.Input();
+
+		messageBoard.setText("sintaxe verificada com sucesso!\n");
+		li3.plp.imperative1.memory.ListaValor entrada = obterListaEntradaImp3(entradaStr);
+		if (prog.checaTipo(new li3.plp.imperative1.memory.ContextoCompilacaoImperativa(entrada))) {
+			messageBoard.append("resultado = "
+					+ prog.executar(new li3.plp.imperative3.memory.ContextoExecucaoImperativa3(entrada))
+							.toString());
+		} else {
+			messageBoard.append("erro de tipos!");
+		}
+	}
+
 	private void interpretarOO1(InputStream fis, String entradaStr)
 			throws Exception {
 		loo1.plp.orientadaObjetos1.Programa prog;
@@ -333,6 +362,35 @@ public class MultiInterpretador {
 		return entrada;
 	}
 
+	@SuppressWarnings("unchecked")
+	private li3.plp.imperative1.memory.ListaValor obterListaEntradaImp3(String texto) {
+		@SuppressWarnings("rawtypes")
+		List valores = new LinkedList<li3.plp.expressions2.expression.ValorConcreto>();
+		li3.plp.imperative1.memory.ListaValor entrada = new li3.plp.imperative1.memory.ListaValor();
+		StringTokenizer parser = new StringTokenizer(texto);
+
+		while (parser.hasMoreTokens()) {
+			String parametro = parser.nextToken();
+			
+			try {
+				Integer inteiro = Integer.valueOf(parametro);
+				valores.add(new li1.plp.expressions2.expression.ValorInteiro(inteiro.intValue()));
+				continue;
+			} catch (NumberFormatException e) {
+
+			}
+
+			if (parametro.equalsIgnoreCase("true")
+					|| parametro.equalsIgnoreCase("false")) {
+				Boolean booleano = Boolean.valueOf(parametro);
+				valores.add(new li3.plp.expressions2.expression.ValorBooleano(booleano.booleanValue()));
+			} else {
+				valores.add(new li3.plp.expressions2.expression.ValorString(parametro));
+			}
+		}
+		entrada = Imp3Parser.criaListaValor(valores);
+		return entrada;
+	}
 
 	@SuppressWarnings("unchecked")
 	private loo1.plp.orientadaObjetos1.memoria.colecao.ListaValor obterListaEntradaOO1(
