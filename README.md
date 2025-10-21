@@ -104,6 +104,7 @@ Declaracao ::= [DeclaracaoVariavel](PLP/Imperativa2/src/li2/plp/imperative1/decl
 &emsp; &emsp; &emsp; &emsp;  &ensp;| [DeclaracaoProcedimento](PLP/Imperativa2/src/li2/plp/imperative2/declaration/DeclaracaoProcedimento.java)
 
 &emsp; &emsp; &emsp; &emsp;  &ensp;| [DeclaracaoComposta](PLP/Imperativa2/src/li2/plp/imperative1/declaration/DeclaracaoComposta.java)
+&emsp; &emsp; &emsp; &emsp;  &ensp;|CriacaoLista
 
 DeclaracaoVariavel ::= “var” Id “=” Expressao
 
@@ -114,7 +115,9 @@ DeclaracaoComposta ::= Declaracao “,” Declaracao
 ListaDeclaracaoParametro ::= [DeclaracaoParametro](PLP/Imperativa2/src/li2/plp/imperative2/declaration/DeclaracaoParametro.java) Tipo Id |\
  &emsp; &emsp; &emsp; &emsp;  &ensp;| [ListaDeclaracaoParametro](PLP/Imperativa2/src/li2/plp/imperative2/declaration/ListaDeclaracaoParametro.java) Tipo Id "," ListaDeclaracaoParametro
 
-Tipo ::= “string” | “int” | “boolean”
+Tipo ::= “string” | “int” | “boolean” | TipoLista
+
+TipoLista ::= "list" "<" Tipo ">"
 
 While ::= “while” Expressao “do” Comando
 
@@ -137,6 +140,10 @@ MetodoLista ::= "add" "(" Expressao ")"
  &emsp; &emsp; &emsp; &emsp;  &ensp;| "update" "(" Expressao "," Expressao ")"
  
  &emsp; &emsp; &emsp; &emsp;  &ensp;| "show" "(" ")"
+
+
+SequenciaComando ::= Comando ";" Comando
+
 
 ---
 ### Classes Auxiliares
