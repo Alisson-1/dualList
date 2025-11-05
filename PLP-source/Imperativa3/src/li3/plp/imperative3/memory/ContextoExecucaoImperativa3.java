@@ -18,11 +18,17 @@ public class ContextoExecucaoImperativa3 extends ContextoExecucaoImperativa
 	private Contexto<DefProcedimento> contextoProcedimentos;
 
 	/**
+	 * Heap para armazenamento dinâmico de references de dados.
+	 */
+	private Heap heap;
+
+	/**
 	 * Construtor da classe.
 	 */
 	public ContextoExecucaoImperativa3(ListaValor entrada) {
 		super(entrada);
 		contextoProcedimentos = new Contexto<DefProcedimento>();
+		this.heap = new Heap();
 	}
 
 	@Override
@@ -55,7 +61,7 @@ public class ContextoExecucaoImperativa3 extends ContextoExecucaoImperativa
 
 	/**
 	 * Retorna o procedimento mapeado ao id dado.
-	 * 
+	 *
 	 * @exception ProcedimentoNaoDeclaradoException
 	 *                se n�o existir nenhum procedimento mapeado ao id dado
 	 *                nesta tabela.
@@ -68,5 +74,19 @@ public class ContextoExecucaoImperativa3 extends ContextoExecucaoImperativa
 			throw new ProcedimentoNaoDeclaradoException(idArg);
 		}
 
+	}
+
+	/**
+	 * Retorna a heap do ambiente.
+	 */
+	public Heap getHeap() {
+		return heap;
+	}
+
+	/**
+	 * Define a heap do ambiente.
+	 */
+	public void setHeap(Heap heap) {
+		this.heap = heap;
 	}
 }
