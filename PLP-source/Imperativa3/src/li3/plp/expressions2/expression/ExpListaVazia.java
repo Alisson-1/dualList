@@ -1,6 +1,6 @@
 package li3.plp.expressions2.expression;
 
-import li3.plp.imperative3.util.TipoLista;
+import li3.plp.imperative3.util.TipoDualList;
 import li3.plp.imperative3.references.ListaDuplaEncadeada;
 import li3.plp.imperative3.memory.AmbienteExecucaoImperativa3;
 import li3.plp.imperative3.memory.Heap;
@@ -16,9 +16,9 @@ import li3.plp.expressions2.memory.VariavelNaoDeclaradaException;
  */
 public class ExpListaVazia implements Expressao {
 
-	private TipoLista tipo;
+	private TipoDualList tipo;
 
-	public ExpListaVazia(TipoLista tipo) {
+	public ExpListaVazia(TipoDualList tipo) {
 		this.tipo = tipo;
 	}
 

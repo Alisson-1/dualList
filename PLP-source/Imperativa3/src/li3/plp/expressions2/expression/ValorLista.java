@@ -1,7 +1,7 @@
 package li3.plp.expressions2.expression;
 
 import li3.plp.expressions1.util.Tipo;
-import li3.plp.imperative3.util.TipoLista;
+import li3.plp.imperative3.util.TipoDualList;
 import li3.plp.imperative3.references.ListaDuplaEncadeada;
 import li3.plp.expressions2.memory.AmbienteCompilacao;
 
@@ -12,7 +12,8 @@ import li3.plp.expressions2.memory.AmbienteCompilacao;
 public class ValorLista extends ValorConcreto<Integer> {
 
 	private ListaDuplaEncadeada lista;  // Referência direta!
-	private TipoLista tipo;  // Tipo da lista
+	private TipoDualList tipo;  // Tipo da lista
+	private String cachedString;
 
 	/**
 	 * Construtor.
@@ -21,10 +22,11 @@ public class ValorLista extends ValorConcreto<Integer> {
 	 * @param lista referência direta à lista
 	 * @param tipo tipo da lista
 	 */
-	public ValorLista(int referenciaId, ListaDuplaEncadeada lista, TipoLista tipo) {
+	public ValorLista(int referenciaId, ListaDuplaEncadeada lista, TipoDualList tipo) {
 		super(referenciaId);
 		this.lista = lista;
 		this.tipo = tipo;
+		this.cachedString = null;
 	}
 
 	/**
@@ -48,12 +50,16 @@ public class ValorLista extends ValorConcreto<Integer> {
 
 	@Override
 	public String toString() {
-		// Usa a lista diretamente!
+		if (cachedString != null) {
+			return cachedString;
+		}
 		return lista.mostrar();
 	}
 
 	@Override
 	public ValorLista clone() {
-		return new ValorLista(getReferenciaId(), lista, tipo);
+		ValorLista cloneObj = new ValorLista(getReferenciaId(), lista, tipo);
+		cloneObj.cachedString = lista.mostrar();
+		return cloneObj;
 	}
 }

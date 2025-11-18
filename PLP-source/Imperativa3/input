@@ -1,10 +1,5 @@
-{
- var a = 1;
- {
-  var b = 2;
   {
-   var result = a + b;
-   write(result)
+    var numero: duallist<int>;
+    add(numero, 1);
+    write(numero)
   }
- }
-}

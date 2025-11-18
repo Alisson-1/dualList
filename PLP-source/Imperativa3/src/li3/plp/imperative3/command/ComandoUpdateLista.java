@@ -5,7 +5,7 @@ import li3.plp.imperative1.memory.AmbienteCompilacaoImperativa;
 import li3.plp.imperative1.memory.AmbienteExecucaoImperativa;
 import li3.plp.imperative1.memory.EntradaVaziaException;
 import li3.plp.imperative1.memory.ErroTipoEntradaException;
-import li3.plp.imperative3.util.TipoLista;
+import li3.plp.imperative3.util.TipoDualList;
 import li3.plp.imperative3.references.ListaDuplaEncadeada;
 import li3.plp.expressions2.expression.Id;
 import li3.plp.expressions2.expression.Expressao;
@@ -65,7 +65,7 @@ public class ComandoUpdateLista implements Comando {
 			return false;
 		}
 
-		TipoLista tipoLista = (TipoLista) tipoVariavel;
+		TipoDualList tipoLista = (TipoDualList) tipoVariavel;
 		Tipo tipoElemento = tipoLista.getTipoElemento();
 
 		boolean antigoValido = expressaoValorAntigo.checaTipo(ambiente) &&

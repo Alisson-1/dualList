@@ -73,7 +73,7 @@ public interface Tipo {
 	/**
 	 * Verifica se este tipo é um tipo lista.
 	 *
-	 * @return <code>true</code> se for TipoLista; <code>false</code> caso contrário.
+	 * @return <code>true</code> se for TipoDualList; <code>false</code> caso contrário.
 	 */
 	default boolean eLista() {
 		return false;

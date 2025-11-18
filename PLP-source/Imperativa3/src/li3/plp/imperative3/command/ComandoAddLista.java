@@ -5,7 +5,7 @@ import li3.plp.imperative1.memory.AmbienteCompilacaoImperativa;
 import li3.plp.imperative1.memory.AmbienteExecucaoImperativa;
 import li3.plp.imperative1.memory.EntradaVaziaException;
 import li3.plp.imperative1.memory.ErroTipoEntradaException;
-import li3.plp.imperative3.util.TipoLista;
+import li3.plp.imperative3.util.TipoDualList;
 import li3.plp.imperative3.references.ListaDuplaEncadeada;
 import li3.plp.expressions2.expression.Id;
 import li3.plp.expressions2.expression.Expressao;
@@ -57,14 +57,14 @@ public class ComandoAddLista implements Comando {
 	public boolean checaTipo(AmbienteCompilacaoImperativa ambiente)
 			throws IdentificadorJaDeclaradoException, IdentificadorNaoDeclaradoException, EntradaVaziaException {
 
-		// Verificar que idLista é do tipo TipoLista
+		// Verificar que idLista é do tipo TipoDualList
 		Tipo tipoVariavel = idLista.getTipo(ambiente);
 		if (!tipoVariavel.eLista()) {
 			return false;
 		}
 
 		// Verificar que expressaoValor tem o tipo correto
-		TipoLista tipoLista = (TipoLista) tipoVariavel;
+		TipoDualList tipoLista = (TipoDualList) tipoVariavel;
 		boolean expressaoValida = expressaoValor.checaTipo(ambiente);
 		boolean tipoCompativel = expressaoValor.getTipo(ambiente).eIgual(tipoLista.getTipoElemento());
 

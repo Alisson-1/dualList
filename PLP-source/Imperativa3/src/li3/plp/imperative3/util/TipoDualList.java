@@ -3,19 +3,19 @@ package li3.plp.imperative3.util;
 import li3.plp.expressions1.util.Tipo;
 
 /**
- * Representa o tipo list<T> para listas duplamente encadeadas.
+ * Representa o tipo duallist<T> para listas duplamente encadeadas.
  */
-public class TipoLista implements Tipo {
+public class TipoDualList implements Tipo {
 
 	private Tipo tipoElemento;
 
-	public TipoLista(Tipo tipoElemento) {
+	public TipoDualList(Tipo tipoElemento) {
 		this.tipoElemento = tipoElemento;
 	}
 
 	@Override
 	public String getNome() {
-		return "list<" + tipoElemento.getNome() + ">";
+		return "duallist<" + tipoElemento.getNome() + ">";
 	}
 
 	@Override
@@ -40,10 +40,10 @@ public class TipoLista implements Tipo {
 
 	@Override
 	public boolean eIgual(Tipo tipo) {
-		if (!(tipo instanceof TipoLista)) {
+		if (!(tipo instanceof TipoDualList)) {
 			return false;
 		}
-		TipoLista outraLista = (TipoLista) tipo;
+		TipoDualList outraLista = (TipoDualList) tipo;
 		return this.tipoElemento.eIgual(outraLista.tipoElemento);
 	}
 

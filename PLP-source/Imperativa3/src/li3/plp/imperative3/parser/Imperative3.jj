@@ -138,11 +138,10 @@ TOKEN : /* TOKENS DE IMPERATIVA 2 */
 
 TOKEN : /* TOKENS DE IMPERATIVA 3 - LISTAS */
 {
-  < LIST: "list" >
+  < DUALLIST: "duallist" >
 | < ADD: "add" >
 | < REMOVE: "remove" >
 | < UPDATE: "update" >
-| < SHOW: "show" >
 }
 
 TOKEN : /* TOKENS DOS POSS�VEIS TIPOS */
@@ -806,8 +805,8 @@ Tipo PTipo():
 	<INT> {tipo = TipoPrimitivo.INTEIRO;} |
 	<BOOLEAN> {tipo = TipoPrimitivo.BOOLEANO;} |
 	<STRING> {tipo = TipoPrimitivo.STRING;} |
-	<LIST> <LT> tipoElemento = PTipo() <GT>
-		{tipo = new TipoLista(tipoElemento);}
+	<DUALLIST> <LT> tipoElemento = PTipo() <GT>
+		{tipo = new TipoDualList(tipoElemento);}
 	)
 	{
 		return tipo;
@@ -866,8 +865,8 @@ DeclaracaoVariavel PDeclaracaoVariavel() :
 		<COLON> tipo = PTipo()
 		{
 			// Declaração com tipo explícito: criar valor default
-			if (tipo instanceof TipoLista) {
-				exp = new ExpListaVazia((TipoLista)tipo);
+			if (tipo instanceof TipoDualList) {
+				exp = new ExpListaVazia((TipoDualList)tipo);
 			} else {
 				throw new ParseException("Tipo " + tipo.getNome() + " requer inicialização com =");
 			}

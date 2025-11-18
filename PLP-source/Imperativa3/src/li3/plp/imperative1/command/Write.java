@@ -16,18 +16,18 @@ public class Write implements IO {
 
 	/**
 	 * Escreve na saida padr�o.
-	 * 
 	 * @param ambiente
 	 *            o ambiente de execu��o.
-	 * 
+	 *
 	 * @return o ambiente depois de modificado pela execu��o do comando
 	 *         <code>write</code>.
-	 * 
+	 *
 	 */
 	public AmbienteExecucaoImperativa executar(
 			AmbienteExecucaoImperativa ambiente)
 			throws VariavelJaDeclaradaException, VariavelNaoDeclaradaException {
-		ambiente.write(expressao.avaliar(ambiente));
+		li3.plp.expressions2.expression.Valor valor = expressao.avaliar(ambiente);
+		ambiente.write((li3.plp.expressions2.expression.Valor) valor.clone());
 		return ambiente;
 	}
 
