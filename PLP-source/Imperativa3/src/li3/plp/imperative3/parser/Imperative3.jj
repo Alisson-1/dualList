@@ -16,6 +16,8 @@ import li3.plp.imperative3.*;
 import li3.plp.imperative3.command.*;
 import li3.plp.imperative3.declaration.*;
 import li3.plp.imperative3.memory.*;
+import li3.plp.imperative3.util.*;
+import li3.plp.imperative3.references.*;
 import java.util.*;
 
 public class Imp3Parser {
@@ -132,6 +134,14 @@ TOKEN : /* TOKENS DE IMPERATIVA 2 */
 {
   < PROC: "proc" >
 | < CALL: "call" >
+}
+
+TOKEN : /* TOKENS DE IMPERATIVA 3 - LISTAS */
+{
+  < DUALLIST: "duallist" >
+| < ADD: "add" >
+| < REMOVE: "remove" >
+| < UPDATE: "update" >
 }
 
 TOKEN : /* TOKENS DOS POSS�VEIS TIPOS */
@@ -630,6 +640,42 @@ Expressao PExpressao() :
 
 /*  ADICIONADO OU MODIFICADO DA Imperativa1 PARA A Imperativa2  */
 
+ComandoAddLista PComandoAdd():
+{
+	Id id;
+	Expressao valor;
+}
+{
+	<ADD> <LPAREN> id = PId() <COMMA> valor = PExpressao() <RPAREN>
+	{
+		return new ComandoAddLista(id, valor);
+	}
+}
+
+ComandoRemoveLista PComandoRemove():
+{
+	Id id;
+	Expressao valor;
+}
+{
+	<REMOVE> <LPAREN> id = PId() <COMMA> valor = PExpressao() <RPAREN>
+	{
+		return new ComandoRemoveLista(id, valor);
+	}
+}
+
+ComandoUpdateLista PComandoUpdate():
+{
+	Id id;
+	Expressao valorAntigo, valorNovo;
+}
+{
+	<UPDATE> <LPAREN> id = PId() <COMMA> valorAntigo = PExpressao() <COMMA> valorNovo = PExpressao() <RPAREN>
+	{
+		return new ComandoUpdateLista(id, valorAntigo, valorNovo);
+	}
+}
+
 Comando PComandoSimples() :
 {
 	Comando retorno;
@@ -644,6 +690,9 @@ Comando PComandoSimples() :
       | retorno = PIO()
       | <LPAREN> retorno = PComando() <RPAREN>
       | retorno = PChamadaProcedimento()
+      | LOOKAHEAD(<ADD>) retorno = PComandoAdd()
+      | LOOKAHEAD(<REMOVE>) retorno = PComandoRemove()
+      | LOOKAHEAD(<UPDATE>) retorno = PComandoUpdate()
    	)
     {
         return retorno;
@@ -749,12 +798,15 @@ DefProcedimento PDefProcedimento():
 Tipo PTipo():
 {
 	Tipo tipo;
+	Tipo tipoElemento;
 }
 {
 	(
 	<INT> {tipo = TipoPrimitivo.INTEIRO;} |
 	<BOOLEAN> {tipo = TipoPrimitivo.BOOLEANO;} |
-	<STRING> {tipo = TipoPrimitivo.STRING;}
+	<STRING> {tipo = TipoPrimitivo.STRING;} |
+	<DUALLIST> <LT> tipoElemento = PTipo() <GT>
+		{tipo = new TipoDualList(tipoElemento);}
 	)
 	{
 		return tipo;
@@ -803,13 +855,27 @@ ListaExpressao PListaExpressao():
 DeclaracaoVariavel PDeclaracaoVariavel() :
 {
 	Id id;
-	Expressao exp;
+	Tipo tipo = null;
+	Expressao exp = null;
 	DeclaracaoVariavel retorno;
 }
 {
-	 <VAR> id = PId() <ASSIGN> exp = PExpressao() 
-	   	{retorno = new DeclaracaoVariavel(id, exp);}
+	<VAR> id = PId()
+	(
+		<COLON> tipo = PTipo()
+		{
+			// Declaração com tipo explícito: criar valor default
+			if (tipo instanceof TipoDualList) {
+				exp = new ExpListaVazia((TipoDualList)tipo);
+			} else {
+				throw new ParseException("Tipo " + tipo.getNome() + " requer inicialização com =");
+			}
+		}
+		|
+		<ASSIGN> exp = PExpressao()
+	)
 	{
+		retorno = new DeclaracaoVariavel(id, exp);
 		return retorno;
 	}
 }

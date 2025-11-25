@@ -12,4 +12,14 @@ public interface AmbienteExecucaoImperativa3 extends AmbienteExecucaoImperativa 
 	public DefProcedimento getProcedimento(Id idArg)
 			throws ProcedimentoNaoDeclaradoException;
 
+	/**
+	 * Retorna a heap para alocação dinâmica.
+	 */
+	public Heap getHeap();
+
+	/**
+	 * Define a heap do ambiente.
+	 */
+	public void setHeap(Heap heap);
+
 }

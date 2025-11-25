@@ -62,12 +62,21 @@ public interface Tipo {
 	 * dado. Por exemplo, se este tipo pode ser String ou inteiro e o tipo dado
 	 * pode ser inteiro ou booleano, entao este metodo retorna um tipo que so
 	 * pode ser inteiro.
-	 * 
+	 *
 	 * � usado para obter o tipo de express�es como IfThenElse.
-	 * 
+	 *
 	 * @param outroTipo
 	 * @return O tipo interse��o; <code>null</code> caso n�o haja interse��o.
 	 */
 	public abstract Tipo intersecao(Tipo outroTipo);
+
+	/**
+	 * Verifica se este tipo é um tipo lista.
+	 *
+	 * @return <code>true</code> se for TipoDualList; <code>false</code> caso contrário.
+	 */
+	default boolean eLista() {
+		return false;
+	}
 
 }
