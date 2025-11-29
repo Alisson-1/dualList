@@ -2,7 +2,7 @@
 
 ## Universidade Federal de Pernambuco  
 **Centro de Informática**  
-**Disciplina:** IN1007 2025.1 - **Paradigmas de Linguagens de Programação**  
+**Disciplina:** IN1007 2025.2 - **Paradigmas de Linguagens de Programação**  
 
 ## Equipe
 - **Alisson Gabriel Assunção de Oliveira** - [agao@cin.ufpe.br](mailto:agao@cin.ufpe.br)  
