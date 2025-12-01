@@ -149,7 +149,6 @@ TOKEN : /* TOKENS DOS POSS�VEIS TIPOS */
   < INT : "int" >
 | < BOOLEAN  : "boolean" >
 | < STRING  : "string" >
-
 }
 
 TOKEN : /* LITERALS */
